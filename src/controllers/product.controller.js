@@ -47,7 +47,7 @@ export default class ProductManager {
 			products.push(newProduct);
 			await writeFile(this.filePath, JSON.stringify(products, null, 2), 'utf-8');
 			console.log('Producto agregado:', newProduct);
-			return newProduct;
+			return [newProduct, products];
 		} catch (error) {
 			console.error('Error al agregar el producto:', error);
 		}
@@ -63,7 +63,7 @@ export default class ProductManager {
 
 			await writeFile(this.filePath, JSON.stringify(products, null, 2), 'utf-8');
 			console.log('Producto actualizado:', products[productIndex]);
-			return products[productIndex];
+			return [products[productIndex], products];
 		} catch (error) {
 			console.error('Error al actualizar el producto:', error);
 		}
@@ -80,7 +80,7 @@ export default class ProductManager {
 
 			await writeFile(this.filePath, JSON.stringify(filteredProducts, null, 2), 'utf-8');
 			console.log(`Producto con ID ${pid} eliminado`);
-			return true;
+			return [true, filteredProducts];
 		} catch (error) {
 			console.error('Error al eliminar el producto:', error);
 			return false;
