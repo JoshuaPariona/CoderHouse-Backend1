@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
   text-align: center;
 }
 
@@ -10,25 +9,34 @@ h1 {
 
 button {
   padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
+  background-color: #caff4d;
+  color: rgb(0, 0, 0);
   border: none;
   cursor: pointer;
   border-radius: 5px;
   margin: 10px;
 }
 
+.floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
 button:hover {
-  background-color: #0056b3;
+  background-color: #5cb10c;
 }
 
 #productList {
   list-style: none;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .product-card {
   background: white;
+  border: 1px solid #b8b8b8;
   padding: 15px;
   margin: 10px auto;
   width: 300px;
@@ -38,7 +46,7 @@ button:hover {
 }
 
 .product-card button {
-  background-color: red;
+  background-color: rgb(255, 132, 32);
   margin-top: 10px;
 }
 
@@ -68,4 +76,10 @@ button:hover {
   right: 15px;
   font-size: 20px;
   cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

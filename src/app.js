@@ -25,7 +25,6 @@ const io = new Server(httpServer);
 
 //middleware to connect the io to the request
 app.use((req, res, next) => {
-  console.log("socket io middleware");
   req.io = io;
   next();
 });
