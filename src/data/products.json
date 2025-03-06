@@ -68,19 +68,5 @@
       "/images/televisor1.jpg",
       "/images/televisor2.jpg"
     ]
-  },
-  {
-    "id": "5686d631-7618-4d46-8c6e-6859bacd1ad4",
-    "title": "Test",
-    "description": "test desc",
-    "code": "XYZ",
-    "price": "123",
-    "stock": "300",
-    "category": "test",
-    "status": true,
-    "thumbnails": [
-      "image/image1.jpg",
-      "image/image2.jpg"
-    ]
   }
 ]

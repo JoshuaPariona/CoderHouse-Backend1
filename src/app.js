@@ -17,13 +17,6 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
-
-app.get("/realtime_products", (req, res) => {
-  res.render("realTimeProducts");
-});
-
 const httpServer = app.listen(port, () => {
   console.log(`Server http://localhost:${port}/realtime_products`);
 });
@@ -37,6 +30,14 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
+
+app.get("/realtime_products", (req, res) => {
+  res.render("realTimeProducts");
+});
+
+//for the initial load
 const productManager = new ProductManager();
 io.on("connection", async (socket) => {
     const products = await productManager.getProducts();
