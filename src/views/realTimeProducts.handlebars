@@ -1,13 +1,23 @@
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="/css/realtime_products.css" />
 
-<h1>Lista de productos, en tiempo real</h1>
-
-<div>
-  <ul id="productList">
-  </ul>
+<div class="header">
+  <h1>Lista de productos</h1>
+  <p>real-time <span class="listener"></span></p>
 </div>
 
-<button id="openModal" class="floating">Agregar Producto</button>
+<div id="productList"></div>
+
+<div class="actions">
+  <div class="pagination">
+    <button id="prevPage" class="navButton" disabled>&lt</button>
+    <div id="pageCounter" class="pageCounter">1 / 1</div>
+    <button id="nextPage" class="navButton" disabled>&gt</button>
+  </div>
+  <div>
+    <button id="openModal" class="modalButton">Agregar Producto</button>
+    <button id="openCartModal" class="modalButton">Selecciona un carrito</button>
+  </div>
+</div>
 
 <div id="modalOverlay" class="overlay">
   <div class="modal">
@@ -17,13 +27,42 @@
       <input type="text" id="name" placeholder="Nombre del producto" required />
       <input type="text" id="description" placeholder="Descripción" required />
       <input type="text" id="code" placeholder="Código del producto" required />
-      <input type="number" id="price" placeholder="Precio" step="any" required />
+      <input
+        type="number"
+        id="price"
+        placeholder="Precio"
+        step="any"
+        required
+      />
       <input type="number" id="stock" placeholder="Stock" required />
       <input type="text" id="category" placeholder="Categoría" required />
-      <button type="submit">Agregar Producto</button>
+      <button id="submitProduct" type="submit">Agregar Producto</button>
     </form>
   </div>
 </div>
 
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-<script src="js/main.js"></script>
+<div id="modalCartOverlay" class="overlay">
+  <div class="modal">
+    <span id="closeCartModal" class="close">&times;</span>
+    <h2>Selecciona un Carrito</h2>
+    <div id="cartsContainer" class="cartsContainer">No hay carritos aun</div>
+    <a id="currentCart" class="currentCart">Carrito no seleccionado</a>
+    <button id="createCart" class="modalButton">Crear carrito</button>
+  </div>
+</div>
+
+<div id="delOverlay" class="overlay">
+  <span id="closeDelModal" class="close">&times;</span>
+  <div class="modal">
+    <h2>¿Estas seguro que quieres eliminar el producto?</h2>
+    <p id="selectedProduct"></p>
+    <button id="delProduct" class="modalButton">Aceptar</button>
+  </div>
+</div>
+
+<div id="spinnerOverlay" class="spinnerOverlay">
+  <div id="spinner" class="spinner big">
+  </div>
+</div>
+
+<script src="/js/realtime_products.js"></script>

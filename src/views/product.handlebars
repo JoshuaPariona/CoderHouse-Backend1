@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="/css/product.css" />
+
+<input type="hidden" id="param-product-id" value="{{productId}}" />
+
+<div class="header">
+  <h1>Producto</h1>
+</div>
+
+<div id="product-container" class="product-cart-big">
+  <h2 id="product-title"></h2>
+  <p><strong>ID:</strong> <span id="product-id"></span></p>
+  <p><strong>Descripción:</strong> <span id="product-description"></span></p>
+  <p><strong>Código:</strong> <span id="product-code"></span></p>
+  <p><strong>Precio:</strong> $ <span id="product-price"></span></p>
+  <p><strong>Estado:</strong> <span id="product-status"></span></p>
+  <p><strong>Stock:</strong> <span id="product-stock"></span> unidades</p>
+  <p><strong>Categoría:</strong> <span id="product-category"></span></p>
+</div>
+
+<div class="actions">
+  <button id="openAddModal" class="modalButton">Agregar al carrito</button>
+  <button id="openEditProductModal" class="modalButton">Editar producto</button>
+  <button id="openDeleteProductModal" class="delProd">Eliminar producto</button>
+</div>
+
+<div id="errorOverlay" class="overlay">
+  <div class="modal">
+    <h2>Producto no encontrado</h2>
+    <p>Este producto ya no esta disponible</p>
+    <a class="modalButton" href="/realtime_products">Volver a la lista de productos</a>
+  </div>
+</div>
+
+<div id="addOverlay" class="overlay">
+  <span id="closeAddModal" class="close">&times;</span>
+  <div class="modal">
+    <h2>¿Cuantas unidades deseas agregar?</h2>
+    <div class="counter">
+        <button id="decrement" >-</button>
+        <p type="number" id="counterValue" class="label">1</p>
+        <button id="increment">+</button>
+    </div>
+    <button id="addProduct" class="modalButton">Aceptar</button>
+  </div>
+</div>
+
+<div id="editOverlay" class="overlay">
+  <span id="closeEditModal" class="close">&times;</span>
+  <div class="modal">
+    <h2>Editar producto</h2>
+    <form id="editForm" class="form">
+      <input type="text" id="title" placeholder="Nombre del producto" required />
+      <input type="text" id="description" placeholder="Descripción" required />
+      <input type="text" id="code" placeholder="Código del producto" required />
+      <input
+        type="number"
+        id="price"
+        placeholder="Precio"
+        step="any"
+        required
+      />
+      <select id="status" required>
+          <option value="true">Activo</option>
+          <option value="false">Inactivo</option>
+      </select>
+      <input type="number" id="stock" placeholder="Stock" required />
+      <input type="text" id="category" placeholder="Categoría" required />
+      <button id="submitEdit" class="modalButton" type="submit">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+
+<div id="delOverlay" class="overlay">
+  <span id="closeDelModal" class="close">&times;</span>
+  <div class="modal">
+    <h2>¿Estas seguro que quieres eliminar el producto?</h2>
+    <button id="delProduct" class="modalButton">Aceptar</button>
+  </div>
+</div>
+
+<script src="/js/product.js"></script>

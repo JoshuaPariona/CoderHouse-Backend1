@@ -1,38 +1,79 @@
-import { readFile, writeFile, access } from "fs/promises";
-import crypto from "crypto";
+import Cart from "../models/cart.model.js";
 
 export default class CartManager {
-  filePath =  "src/data/carts.json";
-
-  constructor() {
-    this.initFile();
-  }
-
-  async initFile() {
+  async getCarts() {
     try {
-      await access(this.filePath);
+      const carts = await Cart.find().lean();
+      return carts.map((c) => {
+        c.id = c._id.toString();
+        return c;
+      });
     } catch (error) {
-      await writeFile(this.filePath, "[]");
+      console.error("Error al leer los carritos:", error);
+      return [];
     }
   }
 
   async createCart() {
     try {
-      const carts = await this.getCarts();
-      const newCart = { id: this.generateId(), products: [] };
-      carts.push(newCart);
-      await writeFile(this.filePath, JSON.stringify(carts, null, 2), "utf-8");
-      console.log("Carrito creado:", newCart);
-      return newCart;
+      const newCart = await Cart.create({ products: [] });
+      return {
+        ...newCart,
+        id: newCart._id.toString(),
+      };
     } catch (error) {
       console.error("Error al crear el carrito:", error);
     }
   }
 
+  async updateProductInCart(cid, pid, action, quantity) {
+    try {
+      const cart = await Cart.findById(cid).populate("products.product").exec();
+      if (!cart) return [null, false];
+
+      const productIndex = cart.products.findIndex(
+        (p) => p.product?._id.toString() === pid
+      );
+
+      if (productIndex === -1) {
+        if (action === "add") {
+          cart.products.push({ product: pid, quantity });
+        }
+      } else {
+        switch (action) {
+          case "add": {
+            const stock = cart.products[productIndex].product.stock;
+            if (cart.products[productIndex].quantity + quantity > stock) {
+              return [cart, false];
+            }
+            cart.products[productIndex].quantity += quantity;
+            break;
+          }
+          case "remove":
+            cart.products[productIndex].quantity -= quantity;
+            if (cart.products[productIndex].quantity <= 0) {
+              cart.products.splice(productIndex, 1);
+            }
+            break;
+          case "removeall":
+            cart.products.splice(productIndex, 1);
+            break;
+          default:
+            return [cart, false];
+        }
+      }
+      await cart.save();
+      await cart.populate("products.product");
+      return [cart.toObject(), true];
+    } catch (error) {
+      console.error("Error al actualizar el producto en el carrito:", error);
+      return [null, false];
+    }
+  }
+
   async getCart(cid) {
     try {
-      const carts = await this.getCarts();
-      const cart = carts.find((c) => c.id === cid);
+      const cart = await Cart.findById(cid).populate("products.product").exec();
       if (!cart) throw new Error(`Carrito con ID ${cid} no encontrado`);
       return cart;
     } catch (error) {
@@ -40,17 +81,9 @@ export default class CartManager {
       return null;
     }
   }
+}
 
-  async getCarts() {
-    try {
-      const data = await readFile(this.filePath, "utf-8");
-      return JSON.parse(data);
-    } catch (error) {
-      console.error("Error al leer los carritos:", error);
-      return [];
-    }
-  }
-
+/*
   async addProductInCart(cid, pid) {
     try {
       const carts = await this.getCarts();
@@ -74,8 +107,4 @@ export default class CartManager {
       return null;
     }
   }
-
-  generateId() {
-    return crypto.randomUUID();
-  }
-}
+  */

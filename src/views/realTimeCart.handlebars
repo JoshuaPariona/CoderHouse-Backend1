@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/css/realtime_cart.css" />
+
+<input type="hidden" id="param-cart-id" value="{{cartId}}" />
+
+<div class="header">
+  <h1>Carrito</h1>
+  <p>{{cartId}}</p>
+  <p>real-time <span class="listener"></span></p>
+</div>
+
+<div id="cartList" class="cartList">
+</div>
+
+<div id="errorOverlay" class="overlay">
+  <div class="modal">
+    <h2>Carrito no encontrado</h2>
+    <p>Este cacrrito ya no esta disponible</p>
+    <a class="modalButton" href="/realtime_products">Volver a la lista de
+      productos</a>
+  </div>
+</div>
+
+<script src="/js/realtime_cart.js"></script>

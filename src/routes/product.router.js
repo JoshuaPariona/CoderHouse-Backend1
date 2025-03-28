@@ -6,10 +6,23 @@ const productManager = new ProductManager();
 
 productRouter.get("/", async (req, res) => {
   try {
-    const products = await productManager.getProducts();
-    res.status(200).json(products);
+    const { limit = 10, page = 1, sort = "none", query = "none" } = req.query;
+
+    const productsM = await productManager.getProducts(
+      Number(limit) || 10,
+      Number(page) || 1,
+      sort,
+      query
+    );
+
+    res.status(200).json({
+      status: "success",
+      ...productsM,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener los productos" });
+    res
+      .status(500)
+      .json({ status: "error", error: "Error al obtener los productos" });
   }
 });
 
@@ -43,7 +56,10 @@ productRouter.put("/:pid", async (req, res) => {
   const { pid } = req.params;
   const updatedProduct = req.body;
   try {
-    const [product, products] = await productManager.updateProduct(pid, updatedProduct);
+    const [product, products] = await productManager.updateProduct(
+      pid,
+      updatedProduct
+    );
     if (!product) {
       return res
         .status(404)

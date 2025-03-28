@@ -1,0 +1,22 @@
+.tinyProductCard {
+  background: rgb(238, 237, 237);
+  border: 1px solid #b8b8b8;
+  padding: 15px;
+  margin: 10px auto;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  transition: all 0.4s;
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tinyProductCard:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
